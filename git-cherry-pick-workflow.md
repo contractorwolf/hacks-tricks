@@ -1,97 +1,105 @@
-# Git Cherry-Pick Workflow for Multi-Environment Deploys
+# Git Cherry-Pick Workflow
 
-**Promote a single squashed commit cleanly across environment branches.**
+> Promote a single commit across multiple environment branches cleanly.
 
-## The Problem
+## When to Use This
 
-You have multiple long-lived environment branches (`env/dev`, `env/stage`, `master`/`main`) and need to land the same change in each without merge commits piling up or history diverging.
-
-## The Solution
-
-1. Squash your feature to **one commit** on your feature branch
-2. **Cherry-pick** that single SHA into each environment branch via short-lived merge branches
-3. Open PRs that land exactly one commit per environment
+You have long-lived environment branches (`env/dev`, `env/stage`, `main`) and need the same change in each one without messy merge commits or diverging histories.
 
 ## The Workflow
 
-### 1. Build Your Feature (Squashed to 1 Commit)
+### 1. Build Your Feature
+
+Start from main, do your work, then squash everything into one commit:
 
 ```bash
 git fetch origin
-git checkout -b feature/UALS-100 origin/master
+git checkout -b feature/TICKET-123 origin/main
 
-# ... do your work, commit as needed ...
+# ... make your changes, commit as you go ...
 
-git rebase -i origin/master   # squash everything into 1 commit
-git push -u origin feature/UALS-100
+git rebase -i origin/main   # squash all commits into one
+git push -u origin feature/TICKET-123
 ```
 
-Grab the SHA you'll be cherry-picking:
+Get the SHA (the commit identifier you'll cherry-pick):
 
 ```bash
-git log --oneline -1 origin/feature/UALS-100
+git log --oneline -1
 # abc1234 feat: add user authentication
 ```
 
-### 2. Cherry-Pick to Stage
+### 2. Cherry-Pick to Each Environment
+
+For each target branch, create a short-lived merge branch and cherry-pick:
 
 ```bash
-git checkout -b merge/UALS-100-stage origin/env/stage
+# To stage
+git checkout -b merge/TICKET-123-stage origin/env/stage
 git cherry-pick abc1234
-# resolve conflicts if any, then: git cherry-pick --continue
-git push -u origin merge/UALS-100-stage
+git push -u origin merge/TICKET-123-stage
+# Open PR: merge/TICKET-123-stage → env/stage
+
+# To dev
+git checkout -b merge/TICKET-123-dev origin/env/dev
+git cherry-pick abc1234
+git push -u origin merge/TICKET-123-dev
+# Open PR: merge/TICKET-123-dev → env/dev
 ```
 
-Open PR: `merge/UALS-100-stage` → `env/stage`
+## What These Commands Do
 
-### 3. Cherry-Pick to Dev
+- `git fetch origin` — Downloads the latest state from remote without changing your local branches. Always fetch before branching to ensure you're starting from the latest code.
+- `git checkout -b <branch> origin/<base>` — Creates a new branch starting from a remote branch. The `-b` flag creates the branch; without it, you'd just switch to an existing one.
+- `git rebase -i origin/main` — Interactive rebase. Opens an editor showing your commits. Change `pick` to `squash` (or `s`) for all but the first commit to combine them into one.
+- `git cherry-pick <SHA>` — Copies a commit onto your current branch. Creates a new commit with the same changes but a different commit hash (because the parent is different).
+- `git push -u origin <branch>` — Pushes the branch to remote and sets up tracking (`-u`). After this, `git push` and `git pull` work without specifying the remote.
+
+## Handling Conflicts
+
+If cherry-pick hits a conflict:
 
 ```bash
-git checkout -b merge/UALS-100-dev origin/env/dev
-git cherry-pick abc1234
-# resolve conflicts if any
-git push -u origin merge/UALS-100-dev
+# Git will tell you which files conflict
+# Edit those files, resolve the conflicts (look for <<<<<<< markers)
+git add <resolved-files>
+git cherry-pick --continue
+
+# Or, to abandon the cherry-pick:
+git cherry-pick --abort
 ```
 
-Open PR: `merge/UALS-100-dev` → `env/dev`
+## Why Squash First?
 
-## Why This Works
+- One commit = one cherry-pick = fewer chances for conflicts
+- Each environment gets exactly one clean commit
+- Easy to revert later (just revert one SHA, not a merge commit)
+- The commit content is identical across branches, even though the commit hashes differ
 
-| Benefit | Explanation |
-|---------|-------------|
-| **Clean history** | Each environment branch gains exactly 1 commit |
-| **Easy rollback** | Revert a single SHA, not a merge commit |
-| **Consistent diffs** | Same change, same SHA (content-addressable) |
-| **Conflict isolation** | Fix conflicts per-environment without polluting others |
+## Naming Convention
 
-## Visual Flow
-
-```
-master ────●──────────────────────────►
-           │
-           └─► feature/UALS-100 (squash) ──● abc1234
-                                            │
-           ┌────────────────────────────────┤
-           │                                │
-           ▼                                ▼
-env/stage ──● cherry-pick abc1234    env/dev ──● cherry-pick abc1234
-```
-
-## Tips
-
-- **Always fetch first** — ensures you branch from the latest remote state
-- **Use `merge/` prefix** — signals these are throwaway PR branches, not long-lived
-- **Squash before cherry-picking** — one commit = one cherry-pick = fewer conflicts
-- **Same SHA, different parents** — the cherry-picked commits will have different commit hashes but identical content hashes
+- `feature/TICKET-123` — Your working branch where you develop
+- `merge/TICKET-123-stage` — Throwaway branch for the PR to stage. The `merge/` prefix signals it's temporary and can be deleted after merging.
 
 ## Quick Reference
 
 ```bash
-# Get the SHA
-git log --oneline -1 origin/feature/TICKET
+# Get SHA of latest commit on a branch
+git log --oneline -1 origin/feature/TICKET-123
 
-# Cherry-pick with conflict handling
-git cherry-pick <SHA>
-git cherry-pick --continue   # after resolving
-git cherry-pick --abort      # to bail out
+# Cherry-pick commands
+git cherry-pick <SHA>          # apply the commit
+git cherry-pick --continue     # after resolving conflicts
+git cherry-pick --abort        # bail out entirely
+
+# Clean up after PRs are merged
+git branch -d merge/TICKET-123-stage
+git push origin --delete merge/TICKET-123-stage
 ```
+
+## Notes
+
+- Always `git fetch` before starting — stale local refs cause confusion
+- The cherry-picked commits have different SHAs than the original because Git commits include their parent reference
+- If you need the same change in main too, open a regular PR from your feature branch — don't cherry-pick to main
+- Conflicts in one environment don't affect others — each cherry-pick is independent
