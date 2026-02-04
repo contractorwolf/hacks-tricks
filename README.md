@@ -13,6 +13,9 @@ Open your repo's GitHub/GitLab page directly from the terminal. Creates a global
 ### [git-cherry-pick-workflow.md](git-cherry-pick-workflow.md)
 A workflow for promoting changes across multiple environment branches (`dev`, `stage`, `main`) using cherry-pick. Keeps history clean with one commit per environment and avoids merge commit clutter.
 
+### [CLAUDE_CONTEXT_FORKING_GUIDE.md](CLAUDE_CONTEXT_FORKING_GUIDE.md)
+Manage long Claude Code sessions by building a "seed" context then forking from it with `/resume`. Each fork gets full understanding with a fresh token budget.
+
 ## Adding New Pages
 
 Follow the structure in [CLAUDE.md](CLAUDE.md):
