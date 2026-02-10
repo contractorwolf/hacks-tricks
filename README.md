@@ -16,14 +16,12 @@ A workflow for promoting changes across multiple environment branches (`dev`, `s
 ### [CLAUDE_CONTEXT_FORKING_GUIDE.md](CLAUDE_CONTEXT_FORKING_GUIDE.md)
 Manage long Claude Code sessions by building a "seed" context then forking from it with `/resume`. Each fork gets full understanding with a fresh token budget.
 
-## Adding New Pages
+### [BUILD-YOUR-ASSISTANT.md](BUILD-YOUR-ASSISTANT.md)
+Step-by-step guide to designing, building, and testing a custom AI assistant using OpenClaw's markdown-driven architecture. Covers personality files, knowledge setup, skill configuration, and iterative testing.
 
-Follow the structure in [CLAUDE.md](CLAUDE.md):
+### [JOB-CHARACTER-STRATEGIES.md](JOB-CHARACTER-STRATEGIES.md)
+Demonstrates how to build AI "employees" for common service roles — hotel concierge, IT help desk, and retail customer service — using OpenClaw's markdown architecture. Includes complete SOUL.md, AGENTS.md, and config examples for each role.
 
-1. Title with one-line summary
-2. Code block immediately
-3. "What It Does" breakdown
-4. Usage examples
-5. Notes for caveats and edge cases
+### [OPENCLAW-MARKDOWN-ARCHITECTURE.md](OPENCLAW-MARKDOWN-ARCHITECTURE.md)
+Comprehensive reference to every markdown file that defines an OpenClaw agent's personality, behavior, and capabilities. Covers file locations, loading order, behavioral techniques, and advanced patterns like persona switching and memory priming.
 
-Keep it code-forward but explanatory enough for someone unfamiliar with the tools.
