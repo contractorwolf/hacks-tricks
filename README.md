@@ -15,17 +15,12 @@ Command-line tricks and workflow hacks for engineers. Each page is a self-contai
 - **[cursor-slash-commands.md](cursor-slash-commands.md)** — Reference for Cursor CLI slash commands. Covers modes (`/plan`, `/ask`), model switching, session management (`/resume`, `/compress`), MCP server control, and account commands.
 - **[CURSOR_BROWSER_USAGE.md](CURSOR_BROWSER_USAGE.md)** — Guide to Cursor's Browser Agent. Covers using `@browser` in Composer to navigate pages, read console errors, take screenshots, and run end-to-end flow tests against your local dev server.
 
-### [BUILD-YOUR-ASSISTANT.md](BUILD-YOUR-ASSISTANT.md)
-Step-by-step guide to designing, building, and testing a custom AI assistant using OpenClaw's markdown-driven architecture. Covers personality files, knowledge setup, skill configuration, and iterative testing.
+### OpenClaw
 
-### [cursor-slash-commands.md](cursor-slash-commands.md)
-Reference for Cursor CLI slash commands. Covers modes (`/plan`, `/ask`), model switching, session management (`/resume`, `/compress`), MCP server control, and account commands.
-
-### [JOB-CHARACTER-STRATEGIES.md](JOB-CHARACTER-STRATEGIES.md)
-Demonstrates how to build AI "employees" for common service roles — hotel concierge, IT help desk, and retail customer service — using OpenClaw's markdown architecture. Includes complete SOUL.md, AGENTS.md, and config examples for each role.
-
-### [OPENCLAW-MARKDOWN-ARCHITECTURE.md](OPENCLAW-MARKDOWN-ARCHITECTURE.md)
-Comprehensive reference to every markdown file that defines an OpenClaw agent's personality, behavior, and capabilities. Covers file locations, loading order, behavioral techniques, and advanced patterns like persona switching and memory priming.
+- **[openclaw/OPENCLAW-MARKDOWN-ARCHITECTURE.md](openclaw/OPENCLAW-MARKDOWN-ARCHITECTURE.md)** — Comprehensive reference to every markdown file that defines an OpenClaw agent's personality, behavior, and capabilities. Covers file locations, loading order, behavioral techniques, and advanced patterns like persona switching and memory priming.
+- **[openclaw/BUILD-YOUR-ASSISTANT.md](openclaw/BUILD-YOUR-ASSISTANT.md)** — Step-by-step guide to designing, building, and testing a custom AI assistant using OpenClaw's markdown-driven architecture. Covers personality files, knowledge setup, skill configuration, and iterative testing.
+- **[openclaw/JOB-CHARACTER-STRATEGIES.md](openclaw/JOB-CHARACTER-STRATEGIES.md)** — Demonstrates how to build AI "employees" for common service roles — hotel concierge, IT help desk, and retail customer service — using OpenClaw's markdown architecture. Includes complete SOUL.md, AGENTS.md, and config examples for each role.
+- **[openclaw/OPENCLAW-slack-setup-guide.md](openclaw/OPENCLAW-slack-setup-guide.md)** — End-to-end guide for connecting a Slack bot to OpenClaw via Socket Mode. Covers token types, every bot scope with explanations, event subscriptions, and the critical token re-minting gotcha that costs most people hours of debugging.
 
 ### Terminal & Shell
 
