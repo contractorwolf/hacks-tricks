@@ -29,6 +29,11 @@ Command-line tricks and workflow hacks for engineers. Each page is a self-contai
 - **[BUILD-YOUR-ASSISTANT.md](openclaw/BUILD-YOUR-ASSISTANT.md)** — Step-by-step guide to designing, building, and testing a custom AI assistant using OpenClaw's markdown-driven architecture. Covers personality files, knowledge setup, skill configuration, and iterative testing.
 - **[JOB-CHARACTER-STRATEGIES.md](openclaw/JOB-CHARACTER-STRATEGIES.md)** — Demonstrates how to build AI "employees" for common service roles — hotel concierge, IT help desk, and retail customer service — using OpenClaw's markdown architecture. Includes complete SOUL.md, AGENTS.md, and config examples for each role.
 - **[OPENCLAW-slack-setup-guide.md](openclaw/OPENCLAW-slack-setup-guide.md)** — End-to-end guide for connecting a Slack bot to OpenClaw via Socket Mode. Covers token types, every bot scope with explanations, event subscriptions, and the critical token re-minting gotcha that costs most people hours of debugging.
+- **[OPENCLAW-telegram-setup-guide.md](openclaw/OPENCLAW-telegram-setup-guide.md)** — End-to-end guide for connecting a Telegram bot to OpenClaw.
+
+
+
+
 
 ### General
 
